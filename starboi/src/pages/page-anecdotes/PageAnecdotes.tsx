@@ -15,7 +15,7 @@ type AnecdoteCardProps = {
   anecdote: Anecdote;
 };
 
-type ButtonSectionPropTypes = {
+type PageAnecdoteChildPropTypes = {
   anecdotes: Anecdote[];
   setAnecdotes: React.Dispatch<React.SetStateAction<Anecdote[]>>;
 };
@@ -33,16 +33,48 @@ const AnecdoteCard = ({ anecdote }: AnecdoteCardProps) => (
   </div>
 );
 
-const AnecdoteCardSection = ({ anecdotes }: { anecdotes: Anecdote[] }) => (
-  <section className="anecdote-card-section" contentEditable>
-    {anecdotes.map((a) => (
-      <AnecdoteCard anecdote={a} key={generateUniqueKey(a)} />
-    ))}
-  </section>
-);
+const parseAnecdotesByHeadings = (headings: HTMLHeadingElement[]) => {
+  return [];
+};
+
+const AnecdoteCardSection = ({
+  anecdotes,
+  setAnecdotes,
+}: PageAnecdoteChildPropTypes) => {
+  // note: this whole dom parsing thing is basically an anti-pattern
+  const handleKeyUp = (ev: React.KeyboardEvent) => {
+    const result = ev?.target as HTMLElement;
+    const anecdoteHeadings =
+      result instanceof HTMLElement
+        ? Array.from(result.getElementsByTagName("h3"))
+        : [];
+
+    if (anecdoteHeadings.length) {
+      const newAnecdotes = parseAnecdotesByHeadings(anecdoteHeadings);
+      console.log({ newAnecdotes });
+    } else {
+      setAnecdotes([]);
+    }
+  };
+
+  return (
+    <section
+      className="anecdote-card-section"
+      contentEditable
+      onKeyUp={handleKeyUp}
+    >
+      {anecdotes.map((a) => (
+        <AnecdoteCard anecdote={a} key={generateUniqueKey(a)} />
+      ))}
+    </section>
+  );
+};
 
 // TODO: compare to Rockstarboi, who uses Material <Button />
-const ButtonSection = ({ anecdotes, setAnecdotes }: ButtonSectionPropTypes) => {
+const ButtonSection = ({
+  anecdotes,
+  setAnecdotes,
+}: PageAnecdoteChildPropTypes) => {
   const handleClickAddAnecdote = (
     ev: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -98,7 +130,12 @@ export const PageAnecdotes = () => {
   return (
     <>
       <ButtonSection anecdotes={anecdotes} setAnecdotes={setAnecdotes} />
-      {anecdotes.length ? <AnecdoteCardSection anecdotes={anecdotes} /> : null}
+      {anecdotes.length ? (
+        <AnecdoteCardSection
+          anecdotes={anecdotes}
+          setAnecdotes={setAnecdotes}
+        />
+      ) : null}
     </>
   );
 };
