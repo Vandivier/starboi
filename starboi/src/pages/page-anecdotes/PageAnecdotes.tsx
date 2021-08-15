@@ -48,18 +48,46 @@ const ButtonSection = ({ anecdotes, setAnecdotes }: ButtonSectionPropTypes) => {
   ) => {
     setAnecdotes([{ ...EMPTY_ANECDOTE }].concat(anecdotes));
   };
-  const handleClickImportAnecdotes = (
-    ev: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {};
+
+  const handleChangeImportAnecdotes = async (
+    evOnChange: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const reader = new FileReader();
+
+    reader.onload = async (evOnload) => {
+      const json = evOnload.target?.result;
+      const parsed = typeof json === "string" ? JSON.parse(json) : null;
+
+      if (parsed) {
+        setAnecdotes(parsed);
+      }
+    };
+
+    if (evOnChange?.target?.files) {
+      reader.readAsText(evOnChange.target.files[0]);
+    }
+  };
+
   const handleClickExportAnecdotes = (
     ev: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {};
 
   return (
     <section>
-      <button onClick={handleClickAddAnecdote}>Add Anecdote</button>
-      <button onClick={handleClickImportAnecdotes}>Import Anecdote JSON</button>
-      <button onClick={handleClickExportAnecdotes}>Export Anecdote JSON</button>
+      <button className="buttonlike" onClick={handleClickAddAnecdote}>
+        Add Anecdote
+      </button>
+      <label className="buttonlike" htmlFor="import-anecdote-input">
+        Import Anecdote JSON
+        <input
+          id="import-anecdote-input"
+          onChange={handleChangeImportAnecdotes}
+          type="file"
+        />
+      </label>
+      <button className="buttonlike" onClick={handleClickExportAnecdotes}>
+        Export Anecdote JSON
+      </button>
     </section>
   );
 };
