@@ -23,18 +23,41 @@ type PageAnecdoteChildPropTypes = {
 const AnecdoteCard = ({ anecdote }: AnecdoteCardProps) => (
   <div className="anecdote-card">
     <h3>{anecdote.name}</h3>
+    <p>{anecdote.date}</p>
     <ol>
+      <li>Employer: {anecdote.employer}</li>
       <li>Situation: {anecdote.situation}</li>
       <li>Obstacle: {anecdote.obstacle}</li>
       <li>Task: {anecdote.task}</li>
       <li>Action: {anecdote.action}</li>
       <li>Result: {anecdote.result}</li>
     </ol>
+    <p>Notes: {anecdote.notes || "N/A"}</p>
   </div>
 );
 
-const parseAnecdotesByHeadings = (headings: HTMLHeadingElement[]) => {
-  return [];
+const parseAnecdotesByHeadings = (
+  headings: HTMLHeadingElement[]
+): Anecdote[] => {
+  const parsedAnecdotes: Anecdote[] = [];
+
+  for (const heading of headings) {
+    const newAnecdote = {
+      name: heading.textContent || "",
+      date: "",
+      employer: "",
+      situation: "",
+      obstacle: "",
+      task: "",
+      action: "",
+      result: "",
+      notes: "",
+    };
+
+    parsedAnecdotes.push(newAnecdote);
+  }
+
+  return parsedAnecdotes;
 };
 
 const AnecdoteCardSection = ({
@@ -51,7 +74,7 @@ const AnecdoteCardSection = ({
 
     if (anecdoteHeadings.length) {
       const newAnecdotes = parseAnecdotesByHeadings(anecdoteHeadings);
-      console.log({ newAnecdotes });
+      setAnecdotes(newAnecdotes);
     } else {
       setAnecdotes([]);
     }

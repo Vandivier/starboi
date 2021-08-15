@@ -2,6 +2,7 @@
   {
     "name": "The time Chandler found a data error maliciously added by a coworker.",
     "date": "August 14, 1996",
+    "employer": "IBM",
     "notes": "",
     "situation": "Chandler was working at IBM on a project related to measuring ocean depth.",
     "obstacle": "A coworker maliciously added incorrect data into an Excel file. This almost killed a diver, who was impacted by running low on oxygen!",
@@ -12,6 +13,7 @@
   {
     "name": "Lorem ipsum bacon eggs breakfast food",
     "date": "August 14, 1997",
+    "employer": "IBM",
     "notes": "foobar",
     "situation": "Chandler was working at IBM on a project related to measuring ocean salinity.",
     "obstacle": "A coworker maliciously added incorrect data into an Excel file. This almost killed a diver, who was impacted by running low on oxygen!",
