@@ -15,3 +15,16 @@
 .anecdote-card li {
   text-align: left;
 }
+
+#import-anecdote-input {
+  display: none;
+}
+
+.buttonlike {
+  background-color: rgb(239, 239, 239);
+  border: 1px solid rgb(118, 118, 118);
+  font: 400 1rem Arial;
+  line-height: 17px;
+  margin: 0 1rem;
+  padding: 2px 6px;
+}
