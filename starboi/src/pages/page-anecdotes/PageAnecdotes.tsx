@@ -87,6 +87,22 @@ const ButtonSection = ({
   andecdoteSectionRef,
   setAnecdotes,
 }: ButtonSectionProps) => {
+  const downloadAnecdoteJson = async () => {
+    const data = updateAnecdoteState();
+    const fileName = `anecdotes-${new Date().getTime()}`;
+    const json = JSON.stringify(data);
+    const blob = new Blob([json], { type: "application/json" });
+    const href = await URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = href;
+    link.download = fileName + ".json";
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   // note: this whole dom parsing thing is basically an anti-pattern
   const updateAnecdoteState = () => {
     const result = andecdoteSectionRef.current;
@@ -98,6 +114,7 @@ const ButtonSection = ({
     if (anecdoteHeadings.length) {
       const newAnecdotes = parseAnecdotesByHeadings(anecdoteHeadings);
       setAnecdotes(newAnecdotes);
+      return newAnecdotes;
     } else {
       setAnecdotes([]);
     }
@@ -131,9 +148,9 @@ const ButtonSection = ({
     }
   };
 
-  const handleClickExportAnecdotes = (
-    ev: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {};
+  const handleClickExportAnecdotes = () => {
+    downloadAnecdoteJson();
+  };
 
   return (
     <section>
