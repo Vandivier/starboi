@@ -17,7 +17,14 @@ type AnecdoteCardProps = {
 
 const AnecdoteCard = ({ anecdote }: AnecdoteCardProps) => (
   <div className="anecdote-card">
-    <p>Hello World.</p>
+    <h3>{anecdote.name}</h3>
+    <ol>
+      <li>Situation: {anecdote.situation}</li>
+      <li>Obstacle: {anecdote.obstacle}</li>
+      <li>Task: {anecdote.task}</li>
+      <li>Action: {anecdote.action}</li>
+      <li>Result: {anecdote.result}</li>
+    </ol>
   </div>
 );
 

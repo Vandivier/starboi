@@ -11,3 +11,7 @@
   margin: 1rem;
   width: 80%;
 }
+
+.anecdote-card li {
+  text-align: left;
+}
