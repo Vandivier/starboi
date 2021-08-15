@@ -2,22 +2,26 @@ import "./PageAnecdotes.css";
 
 import React from "react"; // TODO: line needed?
 
-import anecdotesToType from "./anecdotes.json";
-
 import { Anecdote, EMPTY_ANECDOTE } from "../../customTypes/Anecdote";
+import anecdotesToType from "./anecdotes.json";
 
 const importedAnecdotes: Anecdote[] = anecdotesToType;
 
-// TODO: anexc
 const generateUniqueKey = (a: Anecdote) => JSON.stringify(a);
 
 type AnecdoteCardProps = {
   anecdote: Anecdote;
 };
 
-type PageAnecdoteChildPropTypes = {
+type ButtonSectionProps = {
   anecdotes: Anecdote[];
+  andecdoteSectionRef: React.RefObject<HTMLElement>;
   setAnecdotes: React.Dispatch<React.SetStateAction<Anecdote[]>>;
+};
+
+type AnecdoteCardSectionProps = {
+  anecdotes: Anecdote[];
+  andecdoteSectionRef: React.RefObject<HTMLElement>;
 };
 
 const AnecdoteCard = ({ anecdote }: AnecdoteCardProps) => (
@@ -62,11 +66,30 @@ const parseAnecdotesByHeadings = (
 
 const AnecdoteCardSection = ({
   anecdotes,
+  andecdoteSectionRef,
+}: AnecdoteCardSectionProps) => {
+  return (
+    <section
+      ref={andecdoteSectionRef}
+      className="anecdote-card-section"
+      contentEditable
+    >
+      {anecdotes.map((a) => (
+        <AnecdoteCard anecdote={a} key={generateUniqueKey(a)} />
+      ))}
+    </section>
+  );
+};
+
+// TODO: compare to Rockstarboi, who uses Material <Button />
+const ButtonSection = ({
+  anecdotes,
+  andecdoteSectionRef,
   setAnecdotes,
-}: PageAnecdoteChildPropTypes) => {
+}: ButtonSectionProps) => {
   // note: this whole dom parsing thing is basically an anti-pattern
-  const handleKeyUp = (ev: React.KeyboardEvent) => {
-    const result = ev?.target as HTMLElement;
+  const updateAnecdoteState = () => {
+    const result = andecdoteSectionRef.current;
     const anecdoteHeadings =
       result instanceof HTMLElement
         ? Array.from(result.getElementsByTagName("h3"))
@@ -80,24 +103,6 @@ const AnecdoteCardSection = ({
     }
   };
 
-  return (
-    <section
-      className="anecdote-card-section"
-      contentEditable
-      onKeyUp={handleKeyUp}
-    >
-      {anecdotes.map((a) => (
-        <AnecdoteCard anecdote={a} key={generateUniqueKey(a)} />
-      ))}
-    </section>
-  );
-};
-
-// TODO: compare to Rockstarboi, who uses Material <Button />
-const ButtonSection = ({
-  anecdotes,
-  setAnecdotes,
-}: PageAnecdoteChildPropTypes) => {
   const handleClickAddAnecdote = (
     ev: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -107,8 +112,11 @@ const ButtonSection = ({
   const handleChangeImportAnecdotes = async (
     evOnChange: React.ChangeEvent<HTMLInputElement>
   ) => {
+    updateAnecdoteState();
     const reader = new FileReader();
 
+    // note: this will not trigger if u re-load the same file twice in a row
+    //   this seems to be a browser constraint, not a React thing.
     reader.onload = async (evOnload) => {
       const json = evOnload.target?.result;
       const parsed = typeof json === "string" ? JSON.parse(json) : null;
@@ -118,7 +126,7 @@ const ButtonSection = ({
       }
     };
 
-    if (evOnChange?.target?.files) {
+    if (evOnChange?.target?.files?.length) {
       reader.readAsText(evOnChange.target.files[0]);
     }
   };
@@ -137,6 +145,7 @@ const ButtonSection = ({
         <input
           id="import-anecdote-input"
           onChange={handleChangeImportAnecdotes}
+          onClick={updateAnecdoteState}
           type="file"
         />
       </label>
@@ -149,14 +158,19 @@ const ButtonSection = ({
 
 export const PageAnecdotes = () => {
   const [anecdotes, setAnecdotes] = React.useState(importedAnecdotes);
+  const andecdoteSectionRef = React.useRef(null);
 
   return (
     <>
-      <ButtonSection anecdotes={anecdotes} setAnecdotes={setAnecdotes} />
+      <ButtonSection
+        anecdotes={anecdotes}
+        andecdoteSectionRef={andecdoteSectionRef}
+        setAnecdotes={setAnecdotes}
+      />
       {anecdotes.length ? (
         <AnecdoteCardSection
           anecdotes={anecdotes}
-          setAnecdotes={setAnecdotes}
+          andecdoteSectionRef={andecdoteSectionRef}
         />
       ) : null}
     </>
