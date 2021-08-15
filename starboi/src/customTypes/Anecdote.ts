@@ -1,10 +1,12 @@
-export type Anecdote = {
-  name: string;
-  date: string;
-  notes: string;
-  situation: string;
-  obstacle: string;
-  task: string;
-  action: string;
-  result: string;
+export const EMPTY_ANECDOTE = {
+  name: "",
+  date: "",
+  notes: "",
+  situation: "",
+  obstacle: "",
+  task: "",
+  action: "",
+  result: "",
 };
+
+export type Anecdote = typeof EMPTY_ANECDOTE;
