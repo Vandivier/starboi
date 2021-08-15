@@ -27,16 +27,31 @@ type AnecdoteCardSectionProps = {
 const AnecdoteCard = ({ anecdote }: AnecdoteCardProps) => (
   <div className="anecdote-card">
     <h3>{anecdote.name}</h3>
-    <p>{anecdote.date}</p>
+    <p className="anecdote-date">{anecdote.date}</p>
     <ol>
-      <li>Employer: {anecdote.employer}</li>
-      <li>Situation: {anecdote.situation}</li>
-      <li>Obstacle: {anecdote.obstacle}</li>
-      <li>Task: {anecdote.task}</li>
-      <li>Action: {anecdote.action}</li>
-      <li>Result: {anecdote.result}</li>
+      <li>
+        Employer: <span className="anecdote-employer">{anecdote.employer}</span>
+      </li>
+      <li>
+        Situation:{" "}
+        <span className="anecdote-situation">{anecdote.situation}</span>
+      </li>
+      <li>
+        Obstacle: <span className="anecdote-obstacle">{anecdote.obstacle}</span>
+      </li>
+      <li>
+        Task: <span className="anecdote-task">{anecdote.task}</span>
+      </li>
+      <li>
+        Action: <span className="anecdote-action">{anecdote.action}</span>
+      </li>
+      <li>
+        Result: <span className="anecdote-result">{anecdote.result}</span>
+      </li>
     </ol>
-    <p>Notes: {anecdote.notes || "N/A"}</p>
+    <p>
+      Notes: <span className="anecdote-notes">{anecdote.notes || "N/A"}</span>
+    </p>
   </div>
 );
 
@@ -46,16 +61,34 @@ const parseAnecdotesByHeadings = (
   const parsedAnecdotes: Anecdote[] = [];
 
   for (const heading of headings) {
+    const elCard = heading.parentElement;
+
+    if (elCard === null) {
+      console.log({ errorMessage: "unexpected null elCard" });
+      return [];
+    }
+
     const newAnecdote = {
       name: heading.textContent || "",
-      date: "",
-      employer: "",
-      situation: "",
-      obstacle: "",
-      task: "",
-      action: "",
-      result: "",
-      notes: "",
+      date:
+        elCard.getElementsByClassName("anecdote-date")[0]?.textContent || "",
+      employer:
+        elCard.getElementsByClassName("anecdote-employer")[0]?.textContent ||
+        "",
+      situation:
+        elCard.getElementsByClassName("anecdote-situation")[0]?.textContent ||
+        "",
+      obstacle:
+        elCard.getElementsByClassName("anecdote-obstacle")[0]?.textContent ||
+        "",
+      task:
+        elCard.getElementsByClassName("anecdote-task")[0]?.textContent || "",
+      action:
+        elCard.getElementsByClassName("anecdote-action")[0]?.textContent || "",
+      result:
+        elCard.getElementsByClassName("anecdote-result")[0]?.textContent || "",
+      notes:
+        elCard.getElementsByClassName("anecdote-notes")[0]?.textContent || "",
     };
 
     parsedAnecdotes.push(newAnecdote);
