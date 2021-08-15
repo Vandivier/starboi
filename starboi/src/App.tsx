@@ -1,24 +1,26 @@
-import React from "react"; // TODO: line needed?
-import logo from "./logo.svg";
 import "./App.css";
+
+import React from "react"; // TODO: line needed?
+
+import logo from "./logo.svg";
+import { PageAnecdotes } from "./pages/page-anecdotes/PageAnecdotes";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
+        <h1>Starboi Anecdote Organizer</h1>
         <a
           className="App-link"
-          href="https://reactjs.org"
+          href="https://www.amazon.jobs/en/landing_pages/in-person-interview"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Learn the STAR method
         </a>
       </header>
+      <PageAnecdotes />
     </div>
   );
 }

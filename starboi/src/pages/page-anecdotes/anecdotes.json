@@ -1,0 +1,22 @@
+[
+  {
+    "name": "The time Chandler found a data error maliciously added by a coworker.",
+    "date": "August 14, 1996",
+    "notes": "",
+    "situation": "Chandler was working at IBM on a project related to measuring ocean depth.",
+    "obstacle": "A coworker maliciously added incorrect data into an Excel file. This almost killed a diver, who was impacted by running low on oxygen!",
+    "task": "Chandler was responsible for consuming measurement data and supply chain cost info, then determining optimal spend on scuba gear and oxygen tanks.",
+    "action": "Chandler worked with HR to report the issue, with supply chain to correct the order quantity, and maintained professional relationship w coworker through resolution.",
+    "result": "Higher spend on scuba stuff, but lives saved, and ultimately prevented possible $1.29M in employee lawsuit damages."
+  },
+  {
+    "name": "Lorem ipsum bacon eggs breakfast food",
+    "date": "August 14, 1997",
+    "notes": "foobar",
+    "situation": "Chandler was working at IBM on a project related to measuring ocean salinity.",
+    "obstacle": "A coworker maliciously added incorrect data into an Excel file. This almost killed a diver, who was impacted by running low on oxygen!",
+    "task": "Chandler was responsible for consuming measurement data and supply chain cost info, then determining optimal spend on scuba gear and oxygen tanks.",
+    "action": "Chandler worked with HR to report the issue, with supply chain to correct the order quantity, and maintained professional relationship w coworker through resolution.",
+    "result": "Higher spend on scuba stuff, but lives saved, and ultimately prevented possible $1.29M in employee lawsuit damages."
+  }
+]

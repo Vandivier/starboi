@@ -1,0 +1,13 @@
+.anecdote-card-section {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.anecdote-card {
+  background-color: white;
+  border-radius: 1rem;
+  height: 20rem;
+  margin: 1rem;
+  width: 80%;
+}
